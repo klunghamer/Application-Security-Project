@@ -1,20 +1,14 @@
 from autocorrect import spell
 
-def spellchecker(file):
-    #print spell('theee')
-    words = []
+def spellchecker(file, new_file):
 
-    with open(file) as f:
-        for line in f:
-            for word in line.split():
-                words.append(word)
+    with open(new_file, 'w') as new_file:
 
-    for i in range(0, len(words)):
-        correct_word = spell(words[i])
-        # print correct_word
-        words[i] = correct_word
-
-    print words
+        with open(file) as f:
+            for line in f:
+                for word in line.split():
+                    new_file.write(spell(word) + ' ')
+                new_file.write("\n")
 
 
-spellchecker('text.txt')
+spellchecker('text.txt', 'output.txt')
