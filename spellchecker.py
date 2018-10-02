@@ -1,14 +1,28 @@
 from autocorrect import spell
 
-def spellchecker(file, new_file):
+def spellchecker(input_file):
 
-    with open(new_file, 'w') as new_file:
+    with open(input_file, 'r') as file:
+        data = file.read().splitlines()
 
-        with open(file) as f:
-            for line in f:
-                for word in line.split():
-                    new_file.write(spell(word) + ' ')
-                new_file.write("\n")
+    output = []
 
+    for line in data:
+        words = line.split()
+        correct_words = []
+        for i in range(0, len(words)):
+            correct_words.append(spell(words[i]))
+        output.append(correct_words)
 
-spellchecker('text.txt', 'output.txt')
+    for i in range(len(output)):
+        str = " ".join(output[i])
+        output[i] = str
+
+    for i in range(len(output)):
+        str = output[i] + "\n"
+        output[i] = str
+
+    with open(input_file, 'w') as file:
+        file.writelines(output)
+
+spellchecker('text.txt')
