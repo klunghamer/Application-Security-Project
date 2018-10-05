@@ -1,4 +1,7 @@
 from autocorrect import spell
+import sys
+
+#Function will spellcheck inputted file - use 'text.txt' to test implementation
 
 def spellchecker(input_file):
 
@@ -25,4 +28,7 @@ def spellchecker(input_file):
     with open(input_file, 'w') as file:
         file.writelines(output)
 
-spellchecker('text.txt')
+print "Please chose a file to spellcheck: "
+
+input = sys.stdin.readline().rstrip()
+spellchecker(input)
