@@ -1,4 +1,4 @@
-# Application-Security-Project
+# Application Security Project
 
 This app is run using Python 2.7.10.
 
