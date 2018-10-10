@@ -4,7 +4,7 @@ This app is run using Python 2.7.10.
 
 Install required dependencies:
 
-`pip install spellchecker`
+`pip install autocorrect`
 
 To get started:
 
