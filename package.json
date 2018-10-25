@@ -1,0 +1,33 @@
+{
+  "name": "application-security-project",
+  "version": "1.0.0",
+  "description": "This app is run using Python 2.7.10.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/klunghamer/Application-Security-Project.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/klunghamer/Application-Security-Project/issues"
+  },
+  "homepage": "https://github.com/klunghamer/Application-Security-Project#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "dotenv": "^6.1.0",
+    "express": "^4.16.4",
+    "express-session": "^1.15.6",
+    "method-override": "^3.0.0",
+    "mongoose": "^5.3.6",
+    "morgan": "^1.9.1",
+    "nodemon": "^1.18.4",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
+    "passport-local-mongoose": "^5.0.1"
+  }
+}
