@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  </head>
+  <body>
+    <form action="/signup" method="POST">
+      <div>
+        <label for="text">Sign Up: </label>
+        <input type="text" name="username" placeholder="username" required>
+        <input type="password" name="password" placeholder="password" required>
+        <button type="submit" name="submit"> Sign up</button> {{#if test}}<span>Sign up successful! Please login.</span>{{/if}}
+      </div>
+    </form><br>
+
+
+    <form action="/login" method="POST">
+      <div>
+        <label for="text">Log in: </label>
+        <input type="text" name="username" placeholder="username">
+        <input type="password" name="password" placeholder="password">
+        <button type="submit" name="submit"> Log in</button>
+      </div>
+    </form>
+  </body>
+
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+  </head>
+  <body>
+    <header>
+      <div class="sign-out">
+        {{#if user}}
+        <form action="/signout?_method=DELETE" method="POST">
+          <button type="submit" name="submit" class="signout">Log Out</button>
+        </form>
+        {{else}}
+        {{/if}}
+      </div>
+      <h1 class="main-header">Spellchecker</h1>
+    </header>
+    <form ref='uploadForm'
+      id='uploadForm'
+      action='/upload'
+      method='post'
+      encType="multipart/form-data">
+        <input type="file" name="newFile" />
+        <input type='submit' value='Upload!' />
+    </form>
+    <!-- {{#if iframe}}
+      <span>You're spellchecked file is downloading...</span>
+    {{/if}} -->  
+  </body>
+</html>

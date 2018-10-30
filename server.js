@@ -6,24 +6,39 @@ var port           = process.env.PORT || 4000;
 var passport       = require('passport');
 var LocalStrategy  = require('passport-local').Strategy;
 var methodOverride = require('method-override');
+var expressSanitizer = require('express-sanitizer');
 var app            = express();
 var User           = require('./models/user');
-// var Item           = require('./models/item');
 
-// var requestIp = require('request-ip');
 
 //dotenv config
 require('dotenv').config();
 
 mongoose.Promise = global.Promise;
 
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(expressSanitizer());
 app.use(methodOverride('_method'));
 app.use(logger('dev'));
-app.use(express.static('views'));
+// app.use(express.static('views'));
 
-// app.use('/scripts', express.static(__dirname + '/bower_components'))
+//Handlebars
+var hbs = require('hbs');
+app.set('view engine', 'hbs');
+require('handlebars-form-helpers').register(hbs.handlebars);
+
+//Custom handlebars
+hbs.registerHelper('checkCategory', function (index, type, options) {
+  if(index == type){
+    return options.fn(this);
+  } else {
+    return options.inverse(this);
+  }
+});
+
+//Static Assets
+app.use(express.static(__dirname + '/public'));
 
 mongoose.Promise = global.Promise;
 var db = mongoose.connection;
@@ -41,7 +56,8 @@ mongoose.connect(mongoURI);
 app.use(require('express-session')({
   secret: 'michigan',
   resave: false,
-  saveUninitialized: false
+  saveUninitialized: false,
+  cookie: { path: '/', httpOnly: true, secure:true},
 }))
 
 app.use(passport.initialize());
@@ -51,11 +67,10 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 //Controllers
-// var usersController = require('./controllers/users.js');
-// var helpersController = require('./controllers/helpers.js');
+var usersController = require('./controllers/index.js');
 
 //Routes
-// app.use('/users', usersController);
+app.use('/', usersController);
 // app.use('/helpers', helpersController);
 
 app.listen(port, function() {

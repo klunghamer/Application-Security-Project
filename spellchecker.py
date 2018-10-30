@@ -27,8 +27,8 @@ def spellchecker(input_file):
 
     with open(input_file, 'w') as file:
         file.writelines(output)
-
-print "Please chose a file to spellcheck: "
-
-input = sys.stdin.readline().rstrip()
-spellchecker(input)
+#
+# print "Please chose a file to spellcheck: "
+#
+# input = sys.stdin.readline().rstrip()
+spellchecker('output.txt')
