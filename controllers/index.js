@@ -9,10 +9,13 @@ let {PythonShell} = require('python-shell');
 var User = require('../models/user');
 router.use(fileUpload())
 
+
 //Landing page
 router.get('/', function (req,res) {
+  console.log(req.csrfToken());
   res.render('home', {
-    title: 'Spellchecker'
+    title: 'Spellchecker',
+    token: req.csrfToken()
   })
 });
 
@@ -35,7 +38,8 @@ router.post('/signup', function (req,res) {
       } else {
         console.log(user);
         res.render('home', {
-        test: 'test'
+        test: 'test',
+        token: req.csrfToken()
         })
       }
     })
@@ -43,9 +47,9 @@ router.post('/signup', function (req,res) {
 
 //Log in user
 router.post('/login', passport.authenticate('local'), function (req,res) {
+  console.log(req.body);
   req.body.username = req.sanitize(req.body.username)
   req.body.password = req.sanitize(req.body.password)
-  console.log(req.body);
   req.session.save(function (err) {
     if (err) {
       console.log(err);
@@ -55,6 +59,7 @@ router.post('/login', passport.authenticate('local'), function (req,res) {
       .then(function(users) {
         res.render('upload', {
           user: req.user,
+          token: req.csrfToken()
         })
       })
       .catch(function(err) {
@@ -64,6 +69,7 @@ router.post('/login', passport.authenticate('local'), function (req,res) {
     }
   })
 })
+
 
 router.post('/upload', function(req, res) {
   if (req.files.newFile.name.slice(-4) !== '.txt') {

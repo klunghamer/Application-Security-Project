@@ -19,6 +19,7 @@
   "homepage": "https://github.com/klunghamer/Application-Security-Project#readme",
   "dependencies": {
     "body-parser": "^1.18.3",
+    "csurf": "^1.9.0",
     "dompurify": "^1.0.8",
     "dotenv": "^6.1.0",
     "express": "^4.16.4",

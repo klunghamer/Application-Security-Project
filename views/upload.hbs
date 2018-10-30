@@ -8,6 +8,7 @@
       <div class="sign-out">
         {{#if user}}
         <form action="/signout?_method=DELETE" method="POST">
+          <input type="hidden" name="_csrf" value="{{token}}">
           <button type="submit" name="submit" class="signout">Log Out</button>
         </form>
         {{else}}
@@ -17,14 +18,11 @@
     </header>
     <form ref='uploadForm'
       id='uploadForm'
-      action='/upload'
+      action='/upload?_csrf={{token}}'
       method='post'
       encType="multipart/form-data">
         <input type="file" name="newFile" />
         <input type='submit' value='Upload!' />
     </form>
-    <!-- {{#if iframe}}
-      <span>You're spellchecked file is downloading...</span>
-    {{/if}} -->  
   </body>
 </html>

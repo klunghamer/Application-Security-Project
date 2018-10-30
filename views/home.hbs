@@ -6,6 +6,7 @@
     <form action="/signup" method="POST">
       <div>
         <label for="text">Sign Up: </label>
+        <input type="hidden" name="_csrf" value="{{token}}">
         <input type="text" name="username" placeholder="username" required>
         <input type="password" name="password" placeholder="password" required>
         <button type="submit" name="submit"> Sign up</button> {{#if test}}<span>Sign up successful! Please login.</span>{{/if}}
@@ -16,6 +17,7 @@
     <form action="/login" method="POST">
       <div>
         <label for="text">Log in: </label>
+        <input type="hidden" name="_csrf" value="{{token}}">
         <input type="text" name="username" placeholder="username">
         <input type="password" name="password" placeholder="password">
         <button type="submit" name="submit"> Log in</button>
