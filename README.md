@@ -26,7 +26,7 @@ Start the Node server
 nodemon server.js
 ```
 
-Now the app can be seen hosted on http:localhost:4000
+Now the app can be seen hosted on http://localhost:4000/
 
 **User functionality:**
 
