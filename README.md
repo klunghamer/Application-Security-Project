@@ -34,4 +34,4 @@ Users can sign up for an account, login/logout, and upload a file to spellcheck,
 
 **Security Considerations:**
 
-Secure web application implementation can be seen [here](Assignment_2.pdf)
+Secure web application implementation can be seen [here](Assignment_2.pdf).
