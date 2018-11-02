@@ -5,9 +5,16 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var path = require('path');
 let {PythonShell} = require('python-shell');
+var fs = require('fs');
 
 var User = require('../models/user');
 router.use(fileUpload())
+
+function getFilesizeInMBytes(filename) {
+    var stats = fs.statSync(filename);
+    var fileSizeInBytes = stats.size;
+    return fileSizeInBytes/1000000.0;
+}
 
 
 //Landing page
@@ -34,7 +41,7 @@ router.post('/signup', function (req,res) {
     function(err, user) {
       if (err) {
         console.log(err);
-        res.redirect('/')
+        res.send('Invalid username/password')
       } else {
         console.log(user);
         res.render('home', {
@@ -47,7 +54,6 @@ router.post('/signup', function (req,res) {
 
 //Log in user
 router.post('/login', passport.authenticate('local'), function (req,res) {
-  console.log(req.body);
   req.body.username = req.sanitize(req.body.username)
   req.body.password = req.sanitize(req.body.password)
   req.session.save(function (err) {
@@ -70,8 +76,15 @@ router.post('/login', passport.authenticate('local'), function (req,res) {
   })
 })
 
+router.get('/upload', function (req,res) {
+  console.log(req.csrfToken());
+  res.render('upload', {
+    token: req.csrfToken()
+  })
+});
 
 router.post('/upload', function(req, res) {
+  console.log(req.files.newFile);
   if (req.files.newFile.name.slice(-4) !== '.txt') {
     res.send("Invalid input!")
   }
@@ -84,7 +97,10 @@ router.post('/upload', function(req, res) {
     if (err) {
       return res.status(500).send(err);
     }
-
+    console.log(getFilesizeInMBytes('output.txt'));
+    if (getFilesizeInMBytes('output.txt') > 0.1) {
+      res.send("Error in file. Please upload text file less than 100kB.")
+    }
       PythonShell.run('spellchecker.py', null, function (err) {
         if (err) return res.send();
         console.log('finished');
