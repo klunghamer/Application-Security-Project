@@ -2,7 +2,7 @@
 
 This app is run using Python3 v3.7.0, Node.js v9.11.1, and MongoDB.
 
-Install required dependencies:
+**Install required dependencies:**
 
 ```
 pip3 install autocorrect
