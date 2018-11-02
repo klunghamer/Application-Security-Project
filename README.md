@@ -1,18 +1,31 @@
 # Application Security Project
 
-This app is run using Python 2.7.10.
+This app is run using Python3 v3.7.0, Node.js v9.11.1, and MongoDB.
 
 Install required dependencies:
 
-`pip install autocorrect`
+```
+pip3 install autocorrect
+```
 
-To get started:
+```
+npm install
+```
 
-`python spellchecker`
+**To get started:**
 
-The script will prompt for a file name to use as input.
+Run MongoDB local in the terminal
 
-Type `text.txt` to use the sample file as input, in which the script will edit the file.
+```
+mongod
+```
 
-Another text file could also be used.
+Start the Node server
+
+```
+nodemon server.js
+```
+
+Now the app can be seen hosted on http:localhost:4000
+
 
