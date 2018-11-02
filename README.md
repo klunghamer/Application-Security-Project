@@ -30,7 +30,7 @@ Now the app can be seen hosted on http://localhost:4000/
 
 **User functionality:**
 
-Users can sign up for an account, login/logout, and upload a file to spellcheck, which will then be processed and downloaded on to the users machine.
+Users can sign up for an account, login/logout, and upload a file to spellcheck, which will then be processed and downloaded on to the user's machine.
 
 **Security Considerations:**
 
