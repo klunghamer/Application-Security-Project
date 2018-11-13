@@ -19,7 +19,7 @@ function getFilesizeInMBytes(filename) {
 
 //Landing page
 router.get('/', function (req,res) {
-  console.log(req.csrfToken());
+  // console.log(req.csrfToken());
   res.render('home', {
     title: 'Spellchecker',
     token: req.csrfToken()
@@ -59,7 +59,7 @@ router.post('/login', passport.authenticate('local'), function (req,res) {
   req.session.save(function (err) {
     if (err) {
       console.log(err);
-      res.redirect('/')
+      res.redirect('/');
     } else {
       User.find({}).exec()
       .then(function(users) {
@@ -70,21 +70,20 @@ router.post('/login', passport.authenticate('local'), function (req,res) {
       })
       .catch(function(err) {
         console.log(err);
-        res.redirect('/')
+        res.redirect('/');
       })
     }
   })
 })
 
 router.get('/upload', function (req,res) {
-  console.log(req.csrfToken());
+  // console.log(req.csrfToken());
   res.render('upload', {
     token: req.csrfToken()
   })
 });
 
 router.post('/upload', function(req, res) {
-  console.log(req.files.newFile);
   if (req.files.newFile.name.slice(-4) !== '.txt') {
     res.send("Invalid input!")
   }
@@ -97,13 +96,11 @@ router.post('/upload', function(req, res) {
     if (err) {
       return res.status(500).send(err);
     }
-    console.log(getFilesizeInMBytes('output.txt'));
     if (getFilesizeInMBytes('output.txt') > 0.1) {
       res.send("Error in file. Please upload text file less than 100kB.")
     }
       PythonShell.run('spellchecker.py', null, function (err) {
         if (err) return res.send();
-        console.log('finished');
 
         var file = path.join(__dirname, '../', 'output.txt');
         res.download(file, function(err) {
