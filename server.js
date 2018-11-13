@@ -11,6 +11,8 @@ var sanitizer      = require('mongo-sanitize');
 var csrf          = require('csurf');
 var app            = express();
 var User           = require('./models/user');
+var winston = require('winston'),
+    expressWinston = require('express-winston');
 
 
 //dotenv config
@@ -75,6 +77,28 @@ app.use(function(err, req, res, next) {
 
 //Controllers
 var usersController = require('./controllers/index.js');
+
+app.use(expressWinston.logger({
+  transports: [
+    new winston.transports.Console(),
+    new winston.transports.File({ filename: 'error.log', level: 'error' }),
+    new winston.transports.File({ filename: 'combined.log' })
+  ],
+  format: winston.format.combine(
+    winston.format.timestamp({
+      format: 'YYYY-MM-DD hh:mm:ss A ZZ'
+    }),
+    winston.format.colorize(),
+    winston.format.json()
+  ),
+  meta: true,
+  msg: "HTTP {{req.method}} {{req.url}}",
+  expressFormat: true,
+  colorize: false,
+  dynamicMeta: function(req, res) { return {
+    user: req.user
+  }; }
+}));
 
 //Routes
 app.use('/', usersController);
