@@ -16,14 +16,21 @@
       </div>
       <h1 class="main-header">Spellchecker</h1>
     </header>
-    <form ref='uploadForm'
-      id='uploadForm'
-      action='/upload?_csrf={{token}}'
-      method='post'
-      encType="multipart/form-data">
-        <input type="file" name="newFile" />
-        <input type='submit' value='Download spellchecked file!' />
-    </form> {{#if size}}<span>File too large. Please upload again.</span>{{/if}}
+      {{#if user.file}}
+        <form action="/download" method="GET">
+          <input type="hidden" name="_csrf" value="{{token}}">
+          <button type="submit" name="submit" class="signout">You have a saved file. Click to download.</button>
+        </form>
+      {{else}}
+        <form ref='uploadForm'
+          id='uploadForm'
+          action='/upload?_csrf={{token}}'
+          method='post'
+          encType="multipart/form-data">
+            <input type="file" name="newFile" />
+            <input type='submit' value='Download spellchecked file!' />
+        </form> {{#if size}}<span>File too large. Please upload again.</span>{{/if}}
+      {{/if}}
     <br>
     <br>
     <br>

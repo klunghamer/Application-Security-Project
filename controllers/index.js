@@ -8,6 +8,7 @@ let {PythonShell} = require('python-shell');
 var fs = require('fs');
 
 var User = require('../models/user');
+var File = require('../models/file');
 router.use(fileUpload())
 
 function getFilesizeInMBytes(filename) {
@@ -19,7 +20,6 @@ function getFilesizeInMBytes(filename) {
 
 //Landing page
 router.get('/', function (req,res) {
-  // console.log(req.csrfToken());
   res.render('home', {
     title: 'Spellchecker',
     token: req.csrfToken()
@@ -29,6 +29,7 @@ router.get('/', function (req,res) {
 
 //Sign up user and go back to landing page
 router.post('/signup', function (req,res) {
+  console.log(req.body);
   req.body.username = req.sanitize(req.body.username)
   req.body.password = req.sanitize(req.body.password)
   User.register(
@@ -79,7 +80,8 @@ router.post('/login', passport.authenticate('local'), function (req,res) {
 router.get('/upload', function (req,res) {
   // console.log(req.csrfToken());
   res.render('upload', {
-    token: req.csrfToken()
+    token: req.csrfToken(),
+    user: 'user',
   })
 });
 
@@ -103,14 +105,51 @@ router.post('/upload', function(req, res) {
         if (err) return res.send();
 
         var file = path.join(__dirname, '../', 'output.txt');
-        res.download(file, function(err) {
+        fs.readFile(file, "utf8", function read(err, data) {
           if (err) {
-            if (res.headersSent) {
-              console.log(err)
-            }
+              throw err;
+          } else {
+              var user = req.session.passport.user;
+              User.findOne({username: req.session.passport.user}).exec()
+              .then(function(user){
+                console.log(user);
+                var file = new File({data: data});
+                user.file = file;
+                return user.save();
+              })
+              .then(function(user) {
+                var file = path.join(__dirname, '../', 'output.txt');
+                res.download(file, function(err) {
+                  if (err) {
+                    if (res.headersSent) {
+                      console.log(err)
+                    }
+                  }
+                })
+              })
+              .catch(function(err){
+                console.log(err);
+              })
           }
-        })
+        });
       });
+    });
+  });
+
+
+router.get('/download', function (req,res) {
+  var data = req.user.file.data;
+  fs.writeFile('savedFile.txt', data, { flag: 'w' }, function(err) {
+    if (err)
+      console.error(err);
+      var file = path.join(__dirname, '../', 'savedFile.txt');
+      res.download(file, function(err) {
+        if (err) {
+          if (res.headersSent) {
+            console.log(err)
+          }
+        }
+      })
   });
 });
 
