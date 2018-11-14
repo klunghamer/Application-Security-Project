@@ -36,7 +36,7 @@ Users can sign up for an account, login/logout, and upload a file to spellcheck,
 
 Secure web application implementation can be seen [here](Assignment_2.pdf).
 
-**Update: Third Submission:**
+**Update - Third Submission:**
 
 Logging: I use express-winston to log user actions to a file. This included request metadata, header information, timestamp, user actions by logging request routes, and the timestamp.
 
