@@ -92,7 +92,7 @@ app.use(expressWinston.logger({
     winston.format.json()
   ),
   meta: true,
-  msg: "HTTP {{req.method}} {{req.url}}",
+  // msg: "HTTP {{req.method}} {{req.url}}",
   expressFormat: true,
   colorize: false,
   dynamicMeta: function(req, res) { return {

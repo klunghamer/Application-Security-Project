@@ -67,10 +67,11 @@ router.post('/signup', function (req,res) {
 
 //Log in user
 router.post('/login', passport.authenticate('local'), function (req,res) {
-  console.log(req.body.remember);
   if (req.body.remember) {
     var hour = 3600000;
     req.session.cookie.maxAge = hour*24; //24 hour session
+  } else {
+    req.session.cookie.expires = false;
   }
   req.body.username = req.sanitize(req.body.username)
   req.body.password = req.sanitize(req.body.password)
@@ -95,10 +96,16 @@ router.post('/login', passport.authenticate('local'), function (req,res) {
 })
 
 router.get('/upload', function (req,res) {
-  // console.log(req.csrfToken());
   res.render('upload', {
     token: req.csrfToken(),
     user: req.user,
+  })
+});
+
+router.get('/again', function (req,res) {
+  res.render('upload', {
+    token: req.csrfToken(),
+    user:'user'
   })
 });
 
