@@ -35,3 +35,9 @@ Users can sign up for an account, login/logout, and upload a file to spellcheck,
 **Security Considerations:**
 
 Secure web application implementation can be seen [here](Assignment_2.pdf).
+
+**Update: Third Submission:**
+
+Logging: I use express-winston to log user actions to a file. This included request metadata, header information, timestamp, user actions by logging request routes, and the timestamp.
+
+Security updates: I included user functionality to save spellchecked files in MongoDB. Also, users can now invoke the "Remember me" utility, and their sessions will be saved using cookies for 24 hours. I am still working on how to validate uploaded text files.
