@@ -81,8 +81,10 @@ var usersController = require('./controllers/index.js');
 app.use(expressWinston.logger({
   transports: [
     new winston.transports.Console(),
-    new winston.transports.File({ filename: 'error.log', level: 'error' }),
-    new winston.transports.File({ filename: 'combined.log' })
+    new winston.transports.File({
+      filename: 'combined.log',
+      eol: '\r\n\r\n'
+     })
   ],
   format: winston.format.combine(
     winston.format.timestamp({
@@ -92,11 +94,11 @@ app.use(expressWinston.logger({
     winston.format.json()
   ),
   meta: true,
-  // msg: "HTTP {{req.method}} {{req.url}}",
+  msg: "HTTP {{req.method}} {{req.url}}",
   expressFormat: true,
   colorize: false,
-  dynamicMeta: function(req, res) { return {
-    user: req.user
+  dynamicMeta: function(req, res) { if (req.user) return {
+    user: req.user.username
   }; }
 }));
 
